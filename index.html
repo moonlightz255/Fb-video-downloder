@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Video Downloader · All Resolutions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0b1a2e 0%, #1a2f44 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: rgba(18, 28, 40, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(100, 180, 255, 0.25);
+      border-radius: 36px;
+      padding: 2rem 2.2rem 2.5rem;
+      max-width: 720px;
+      width: 100%;
+      box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 255, 255, 0.05) inset;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 30px 50px -12px rgba(0, 150, 255, 0.3), 0 0 0 1px rgba(100, 200, 255, 0.2) inset;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #eef9ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 svg {
+      width: 38px;
+      height: 38px;
+      filter: drop-shadow(0 0 8px #1877f2);
+    }
+
+    .subhead {
+      color: #9bb8da;
+      font-size: 0.96rem;
+      margin-bottom: 2rem;
+      padding-left: 6px;
+      border-left: 3px solid #1877f2;
+      padding-left: 14px;
+      font-weight: 400;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .url-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .url-input-wrapper svg {
+      position: absolute;
+      left: 18px;
+      width: 20px;
+      height: 20px;
+      stroke: #6a8fb1;
+      stroke-width: 2;
+      fill: none;
+      pointer-events: none;
+    }
+
+    #fbUrl {
+      width: 100%;
+      padding: 1.1rem 1.2rem 1.1rem 3.2rem;
+      background: #0b141e;
+      border: 1.5px solid #2c4055;
+      border-radius: 60px;
+      font-size: 1rem;
+      color: #e3f0ff;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    #fbUrl::placeholder {
+      color: #4f6a83;
+      font-weight: 300;
+    }
+
+    #fbUrl:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.25);
+      background: #0a121c;
+    }
+
+    .btn-primary {
+      background: #1877f2;
+      border: none;
+      border-radius: 60px;
+      padding: 1.1rem 1.8rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 8px 18px -6px #0a3b7a;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: #2d8cff;
+      box-shadow: 0 12px 22px -8px #1877f2;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+      background: #0f6ae0;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      background: #2a4a6e;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .resolution-section {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 28px;
+      padding: 1.6rem 1.4rem 1rem;
+      margin-top: 1.8rem;
+      border: 1px solid #253c52;
+      transition: all 0.2s;
+    }
+
+    .resolution-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      padding: 0 6px;
+    }
+
+    .resolution-header h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #c6ddf5;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      background: #1e3b5a;
+      border-radius: 60px;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #9ac7ff;
+      letter-spacing: 0.3px;
+      border: 1px solid #2f5580;
+    }
+
+    .resolution-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .resolution-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .resolution-list::-webkit-scrollbar-track {
+      background: #0e1a26;
+      border-radius: 12px;
+    }
+
+    .resolution-list::-webkit-scrollbar-thumb {
+      background: #2d4b6b;
+      border-radius: 12px;
+    }
+
+    .resolution-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #101e2c;
+      border: 1px solid #253c52;
+      border-radius: 50px;
+      padding: 0.8rem 1rem 0.8rem 1.5rem;
+      transition: background 0.15s, border 0.15s;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .resolution-item:hover {
+      background: #16283b;
+      border-color: #3873b3;
+    }
+
+    .res-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .res-label {
+      font-weight: 600;
+      color: #d7ebff;
+      font-size: 1rem;
+      min-width: 80px;
+    }
+
+    .res-meta {
+      display: flex;
+      gap: 14px;
+      font-size: 0.82rem;
+      color: #85a9cc;
+      font-weight: 400;
+    }
+
+    .res-meta span {
+      background: #1a2f42;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .download-btn {
+      background: transparent;
+      border: 1.5px solid #1877f2;
+      color: #e3f0ff;
+      border-radius: 40px;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, color 0.15s, border 0.15s;
+      white-space: nowrap;
+    }
+
+    .download-btn:hover {
+      background: #1877f2;
+      color: white;
+      border-color: #1877f2;
+    }
+
+    .download-btn:active {
+      transform: scale(0.96);
+    }
+
+    .download-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #577a9b;
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .empty-state svg {
+      opacity: 0.5;
+      width: 42px;
+      height: 42px;
+      stroke: #3e5e7c;
+    }
+
+    .error-message {
+      color: #ff9f9f;
+      background: rgba(220, 50, 50, 0.15);
+      border-left: 4px solid #d43f3f;
+      padding: 0.9rem 1.2rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .note {
+      font-size: 0.75rem;
+      color: #4e6d8a;
+      text-align: center;
+      margin-top: 1.8rem;
+      border-top: 1px solid #1b2a38;
+      padding-top: 1.4rem;
+      letter-spacing: 0.2px;
+    }
+
+    .note a {
+      color: #6f9fd3;
+      text-decoration: none;
+    }
+
+    .note a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 550px) {
+      .card { padding: 1.6rem 1.2rem; }
+      h1 { font-size: 1.5rem; }
+      .resolution-item { flex-direction: column; align-items: flex-start; gap: 12px; border-radius: 28px; padding: 1.2rem; }
+      .download-btn { width: 100%; justify-content: center; }
+      .res-info { width: 100%; justify-content: space-between; }
+      .res-meta { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#1877f2" stroke-width="1.5"/>
+        <path d="M15 8.5H14.5C13.6716 8.5 13 9.17157 13 10V10.5M13 10.5H15M13 10.5V15M10 12H11.5M10 15H12" stroke="#1877f2" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M12 22C17.5228 22 22 17.5228 22 12" stroke="#4d9aff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      FB Video Downloader
+    </h1>
+    <div class="subhead">Paste any Facebook video link — grab it in all resolutions</div>
+
+    <div class="input-group">
+      <div class="url-input-wrapper">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
+        <input type="url" id="fbUrl" placeholder="https://www.facebook.com/watch/?v=...  or  fb.watch/..." autocomplete="off" spellcheck="false">
+      </div>
+      <button class="btn-primary" id="fetchBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" />
+          <path d="M12 8V16M8 12H16" />
+        </svg>
+        Get video links
+      </button>
+    </div>
+
+    <!-- Error area -->
+    <div id="errorBox" style="display: none;" class="error-message">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+      <span id="errorMsg">Something went wrong.</span>
+    </div>
+
+    <!-- Resolution list -->
+    <div class="resolution-section" id="resolutionSection">
+      <div class="resolution-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8bb9e7" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" />
+            <line x1="8" y1="2" x2="8" y2="22" />
+            <line x1="16" y1="2" x2="16" y2="22" />
+            <line x1="2" y1="8" x2="22" y2="8" />
+            <line x1="2" y1="16" x2="22" y2="16" />
+          </svg>
+          Available resolutions
+        </h2>
+        <span class="badge" id="resCount">0 formats</span>
+      </div>
+
+      <div class="resolution-list" id="resolutionList">
+        <div class="empty-state" id="emptyState">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v8M8 12h8" />
+          </svg>
+          <span>Paste a link and click “Get video links”</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      ⚡ Works with public FB videos. This is a demo — real extraction uses a backend service.<br>
+      Replace the mock backend call with your own API (e.g., yt-dlp, RapidAPI).
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // UI elements
+      const fbUrlInput = document.getElementById('fbUrl');
+      const fetchBtn = document.getElementById('fetchBtn');
+      const resolutionList = document.getElementById('resolutionList');
+      const resCountSpan = document.getElementById('resCount');
+      const errorBox = document.getElementById('errorBox');
+      const errorMsg = document.getElementById('errorMsg');
+      const emptyState = document.getElementById('emptyState');
+
+      // Helper: hide error
+      function hideError() {
+        errorBox.style.display = 'none';
+        errorMsg.textContent = '';
+      }
+
+      // Helper: show error
+      function showError(message) {
+        errorMsg.textContent = message;
+        errorBox.style.display = 'flex';
+      }
+
+      // Helper: update resolution count badge
+      function updateCount(count) {
+        resCountSpan.textContent = `${count} format${count !== 1 ? 's' : ''}`;
+      }
+
+      // Helper: clear list and show empty state
+      function resetList() {
+        resolutionList.innerHTML = '';
+        resolutionList.appendChild(emptyState);
+        emptyState.style.display = 'flex';
+        updateCount(0);
+      }
+
+      // Helper: create a resolution item element
+      function createResolutionItem(res) {
+        const item = document.createElement('div');
+        item.className = 'resolution-item';
+
+        // left side: info
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'res-info';
+
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'res-label';
+        labelSpan.textContent = res.quality || 'unknown';
+
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'res-meta';
+
+        // format container / codec
+        const formatSpan = document.createElement('span');
+        formatSpan.textContent = res.format || 'mp4';
+
+        // size or bitrate (optional)
+        const sizeSpan = document.createElement('span');
+        sizeSpan.textContent = res.size || '— MB';
+
+        // optional audio indicator
+        const audioSpan = document.createElement('span');
+        audioSpan.textContent = res.audio ? '🔊 audio' : '🔇 no audio';
+
+        metaDiv.appendChild(formatSpan);
+        metaDiv.appendChild(sizeSpan);
+        metaDiv.appendChild(audioSpan);
+
+        infoDiv.appendChild(labelSpan);
+        infoDiv.appendChild(metaDiv);
+
+        // download button
+        const dlBtn = document.createElement('button');
+        dlBtn.className = 'download-btn';
+        dlBtn.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Download
+        `;
+        dlBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (res.downloadUrl) {
+            // In a real app, this would start the download or open the URL
+            window.open(res.downloadUrl, '_blank', 'noopener,noreferrer');
+          } else {
+            alert('Demo: download link would be generated by backend.\nQuality: ' + (res.quality || 'unknown'));
+          }
+        });
+
+        item.appendChild(infoDiv);
+        item.appendChild(dlBtn);
+
+        return item;
+      }
+
+      // Render a list of resolution objects
+      function renderResolutions(resolutions) {
+        // Clear current content (but keep emptyState reference)
+        resolutionList.innerHTML = '';
+
+        if (!resolutions || resolutions.length === 0) {
+          resolutionList.appendChild(emptyState);
+          emptyState.style.display = 'flex';
+          updateCount(0);
+          return;
+        }
+
+        emptyState.style.display = 'none'; // hide empty state
+
+        resolutions.forEach((res, index) => {
+          // Add a small delay for animation (optional)
+          const item = createResolutionItem(res);
+          // stagger animation
+          item.style.animationDelay = `${index * 0.03}s`;
+          resolutionList.appendChild(item);
+        });
+
+        updateCount(resolutions.length);
+      }
+
+      // ---------- MOCK BACKEND (replace with real API) ----------
+      // This simulates fetching video resolutions for a given FB link.
+      // In a production app, you would call your server endpoint that uses yt-dlp or similar.
+      function mockFetchResolutions(url) {
+        return new Promise((resolve, reject) => {
+          // Very basic URL check
+          if (!url || (!url.includes('facebook.com') && !url.includes('fb.watch') && !url.includes('fb.com'))) {
+            reject(new Error('Please enter a valid Facebook video link.'));
+            return;
+          }
+
+          // Simulate network delay
+          setTimeout(() => {
+            // Generate plausible resolutions based on typical FB video outputs.
+            // You can customize this list.
+            const mockData = [
+              {
+                quality: '1080p (Full HD)',
+                format: 'mp4',
+                size: '~ 45 MB',
+                audio: true,
+                downloadUrl: 'https://example.com/video/1080p.mp4' // dummy
+              },
+              {
+                quality: '720p (HD)',
+                format: 'mp4',
+                size: '~ 28 MB',
+                audio: true,
+                downloadUrl: 'https://example.com/video/720p.mp4'
+              },
+              {
+                quality: '480p',
+                format: 'mp4',
+                size: '~ 14 MB',
+                audio: true,
+                downloadUrl: 'https://example.com/video/480p.mp4'
+              },
+              {
+                quality: '360p',
+                format: 'mp4',
+                size: '~ 8 MB',
+                audio: true,
+                downloadUrl: 'https://example.com/video/360p.mp4'
+              },
+              {
+                quality: '240p (low)',
+                format: 'mp4',
+                size: '~ 4 MB',
+                audio: false,
+                downloadUrl: 'https://example.com/video/240p.mp4'
+              },
+              {
+                quality: 'Audio only (m4a)',
+                format: 'm4a',
+                size: '~ 3 MB',
+                audio: true,
+                downloadUrl: 'https://example.com/audio.m4a'
+              }
+            ];
+            resolve(mockData);
+          }, 950); // simulate delay
+        });
+      }
+
+      // ---------- Event handler ----------
+      async function handleFetch() {
+        hideError();
+        const url = fbUrlInput.value.trim();
+
+        if (!url) {
+          showError('Please paste a Facebook video link first.');
+          resetList();
+          return;
+        }
+
+        // UI loading state
+        fetchBtn.disabled = true;
+        fetchBtn.innerHTML = `<span class="spinner"></span> Extracting...`;
+
+        try {
+          // Use mock (replace with real fetch to your backend)
+          // Example: const response = await fetch('/api/extract?url=' + encodeURIComponent(url));
+          // const data = await response.json();
+          const resolutions = await mockFetchResolutions(url);
+
+          renderResolutions(resolutions);
+        } catch (err) {
+          showError(err.message || 'Failed to fetch video. Please check the link.');
+          resetList();
+        } finally {
+          fetchBtn.disabled = false;
+          fetchBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" />
+              <path d="M12 8V16M8 12H16" />
+            </svg>
+            Get video links
+          `;
+        }
+      }
+
+      // Attach event listeners
+      fetchBtn.addEventListener('click', handleFetch);
+      fbUrlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleFetch();
+        }
+      });
+
+      // Initialize with empty list
+      resetList();
+
+      // (Optional) prefill a demo value for convenience? Not needed.
+      // but you can uncomment for quick testing
+      // fbUrlInput.value = 'https://www.facebook.com/watch/?v=1234567890';
+    })();
+  </script>
+</body>
+          </html>
