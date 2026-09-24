@@ -3,690 +3,898 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facebook Video Downloader · All Resolutions</title>
+  <title>PixelForge · Canva + Lightroom style editor</title>
+  <!-- Google Font & Font Awesome for icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     }
 
     body {
-      background: linear-gradient(145deg, #0b1a2e 0%, #1a2f44 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1.5rem;
-    }
-
-    .card {
-      background: rgba(18, 28, 40, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(100, 180, 255, 0.25);
-      border-radius: 36px;
-      padding: 2rem 2.2rem 2.5rem;
-      max-width: 720px;
-      width: 100%;
-      box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 255, 255, 0.05) inset;
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 30px 50px -12px rgba(0, 150, 255, 0.3), 0 0 0 1px rgba(100, 200, 255, 0.2) inset;
-    }
-
-    h1 {
-      font-size: 1.9rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #eef9ff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 0.4rem;
-    }
-
-    h1 svg {
-      width: 38px;
-      height: 38px;
-      filter: drop-shadow(0 0 8px #1877f2);
-    }
-
-    .subhead {
-      color: #9bb8da;
-      font-size: 0.96rem;
-      margin-bottom: 2rem;
-      padding-left: 6px;
-      border-left: 3px solid #1877f2;
-      padding-left: 14px;
-      font-weight: 400;
-    }
-
-    .input-group {
+      font-family: 'Inter', sans-serif;
+      background: #1e1e2f;
+      color: #f0f0f5;
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
-      margin-bottom: 2rem;
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    .url-input-wrapper {
-      position: relative;
+    /* header / brand */
+    .app-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .url-input-wrapper svg {
-      position: absolute;
-      left: 18px;
-      width: 20px;
-      height: 20px;
-      stroke: #6a8fb1;
-      stroke-width: 2;
-      fill: none;
-      pointer-events: none;
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    #fbUrl {
-      width: 100%;
-      padding: 1.1rem 1.2rem 1.1rem 3.2rem;
-      background: #0b141e;
-      border: 1.5px solid #2c4055;
-      border-radius: 60px;
-      font-size: 1rem;
-      color: #e3f0ff;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-      font-weight: 400;
-      letter-spacing: 0.2px;
+    .logo-icon {
+      font-size: 2rem;
+      color: #a78bfa;
     }
 
-    #fbUrl::placeholder {
-      color: #4f6a83;
-      font-weight: 300;
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #c4b5fd, #a78bfa, #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    #fbUrl:focus {
-      border-color: #1877f2;
-      box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.25);
-      background: #0a121c;
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      background: #2d2d44;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .btn-primary {
-      background: #1877f2;
-      border: none;
-      border-radius: 60px;
-      padding: 1.1rem 1.8rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 8px 18px -6px #0a3b7a;
-      letter-spacing: 0.3px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #7c3aed;
+      box-shadow: 0 6px 14px rgba(124, 58, 237, 0.4);
     }
 
     .btn-primary:hover {
-      background: #2d8cff;
-      box-shadow: 0 12px 22px -8px #1877f2;
+      background: #6d28d9;
+      transform: translateY(-2px);
     }
 
-    .btn-primary:active {
-      transform: scale(0.98);
-      background: #0f6ae0;
+    .btn:hover {
+      background: #3d3d5a;
     }
 
-    .btn-primary:disabled {
-      opacity: 0.6;
-      background: #2a4a6e;
-      box-shadow: none;
-      cursor: not-allowed;
-      transform: none;
+    .btn-primary:hover {
+      background: #6d28d9;
     }
 
-    .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2.5px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      display: inline-block;
+    .btn i {
+      font-size: 1rem;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .resolution-section {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 28px;
-      padding: 1.6rem 1.4rem 1rem;
-      margin-top: 1.8rem;
-      border: 1px solid #253c52;
-      transition: all 0.2s;
-    }
-
-    .resolution-header {
+    /* main editor layout */
+    .editor-container {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.2rem;
-      padding: 0 6px;
-    }
-
-    .resolution-header h2 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #c6ddf5;
-      letter-spacing: -0.2px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .badge {
-      background: #1e3b5a;
-      border-radius: 60px;
-      padding: 0.2rem 0.9rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #9ac7ff;
-      letter-spacing: 0.3px;
-      border: 1px solid #2f5580;
-    }
-
-    .resolution-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 320px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-
-    .resolution-list::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .resolution-list::-webkit-scrollbar-track {
-      background: #0e1a26;
-      border-radius: 12px;
-    }
-
-    .resolution-list::-webkit-scrollbar-thumb {
-      background: #2d4b6b;
-      border-radius: 12px;
-    }
-
-    .resolution-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #101e2c;
-      border: 1px solid #253c52;
-      border-radius: 50px;
-      padding: 0.8rem 1rem 0.8rem 1.5rem;
-      transition: background 0.15s, border 0.15s;
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .resolution-item:hover {
-      background: #16283b;
-      border-color: #3873b3;
-    }
-
-    .res-info {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      flex: 1;
+      gap: 24px;
       flex-wrap: wrap;
     }
 
-    .res-label {
-      font-weight: 600;
-      color: #d7ebff;
-      font-size: 1rem;
-      min-width: 80px;
-    }
-
-    .res-meta {
+    /* left sidebar — tools & filters */
+    .toolbar {
+      width: 280px;
+      background: #232338;
+      border-radius: 28px;
+      padding: 20px 16px;
       display: flex;
-      gap: 14px;
-      font-size: 0.82rem;
-      color: #85a9cc;
-      font-weight: 400;
+      flex-direction: column;
+      gap: 24px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      border: 1px solid #2e2e46;
     }
 
-    .res-meta span {
-      background: #1a2f42;
-      padding: 0.2rem 0.7rem;
-      border-radius: 40px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .download-btn {
-      background: transparent;
-      border: 1.5px solid #1877f2;
-      color: #e3f0ff;
-      border-radius: 40px;
-      padding: 0.55rem 1.3rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #9d9db5;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s, color 0.15s, border 0.15s;
-      white-space: nowrap;
     }
 
-    .download-btn:hover {
-      background: #1877f2;
-      color: white;
-      border-color: #1877f2;
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
-    .download-btn:active {
-      transform: scale(0.96);
-    }
-
-    .download-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2.2;
-    }
-
-    .empty-state {
-      text-align: center;
-      color: #577a9b;
-      padding: 2rem 1rem;
-      font-size: 0.95rem;
+    .filter-card {
+      background: #2e2e46;
+      border-radius: 18px;
+      padding: 12px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid #3a3a58;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #cfcfe6;
     }
 
-    .empty-state svg {
-      opacity: 0.5;
-      width: 42px;
-      height: 42px;
-      stroke: #3e5e7c;
+    .filter-card i {
+      font-size: 1.4rem;
+      color: #a78bfa;
     }
 
-    .error-message {
-      color: #ff9f9f;
-      background: rgba(220, 50, 50, 0.15);
-      border-left: 4px solid #d43f3f;
-      padding: 0.9rem 1.2rem;
-      border-radius: 16px;
+    .filter-card:hover {
+      background: #3a3a58;
+      transform: scale(1.02);
+      border-color: #7c3aed;
+    }
+
+    .filter-card.active {
+      background: #7c3aed;
+      border-color: #c4b5fd;
+      color: white;
+    }
+
+    .filter-card.active i {
+      color: white;
+    }
+
+    /* sliders */
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .slider-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #bfbfd9;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: #3d3d5a;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #a78bfa;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px #7c3aed;
+      transition: 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: #c4b5fd;
+      transform: scale(1.1);
+    }
+
+    /* color adjustments block */
+    .color-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #2e2e46;
+      padding: 8px 12px;
+      border-radius: 40px;
+      margin-bottom: 10px;
+    }
+
+    .color-row span {
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-row input[type="color"] {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #55557a;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* main canvas area */
+    .canvas-area {
+      flex: 1;
+      min-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .canvas-card {
+      background: #232338;
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid #2e2e46;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+      position: relative;
+    }
+
+    #imageCanvas {
+      max-width: 100%;
+      max-height: 520px;
+      border-radius: 18px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+      background: #14141f;
+      transition: filter 0.1s ease;
+      object-fit: contain;
+      display: block;
+    }
+
+    .canvas-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      color: #7b7b9b;
+      font-size: 1.1rem;
+    }
+
+    .canvas-placeholder i {
+      font-size: 4rem;
+      color: #4a4a6a;
+    }
+
+    /* background & remove bg row */
+    .background-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .bg-btn {
+      background: #2d2d44;
+      border: none;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 40px;
       font-size: 0.9rem;
-      margin-top: 1rem;
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 10px;
-      backdrop-filter: blur(4px);
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .note {
-      font-size: 0.75rem;
-      color: #4e6d8a;
-      text-align: center;
-      margin-top: 1.8rem;
-      border-top: 1px solid #1b2a38;
-      padding-top: 1.4rem;
-      letter-spacing: 0.2px;
+    .bg-btn:hover {
+      background: #3d3d5a;
+      transform: translateY(-2px);
     }
 
-    .note a {
-      color: #6f9fd3;
+    .bg-btn i {
+      color: #a78bfa;
+    }
+
+    /* hidden file input */
+    #fileInput {
+      display: none;
+    }
+
+    /* status / toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #2d2d44;
+      border-left: 6px solid #a78bfa;
+      padding: 14px 24px;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+      font-weight: 500;
+      color: #e0e0ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .toolbar {
+        width: 100%;
+      }
+      .editor-container {
+        flex-direction: column;
+      }
+    }
+
+    .github-corner {
+      font-size: 0.85rem;
+      color: #8b8baa;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .github-corner a {
+      color: #a78bfa;
       text-decoration: none;
+      font-weight: 600;
     }
 
-    .note a:hover {
-      text-decoration: underline;
+    .footer-note {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b6b8b;
     }
 
-    /* Responsive */
-    @media (max-width: 550px) {
-      .card { padding: 1.6rem 1.2rem; }
-      h1 { font-size: 1.5rem; }
-      .resolution-item { flex-direction: column; align-items: flex-start; gap: 12px; border-radius: 28px; padding: 1.2rem; }
-      .download-btn { width: 100%; justify-content: center; }
-      .res-info { width: 100%; justify-content: space-between; }
-      .res-meta { flex-wrap: wrap; }
+    .bg-option {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      justify-content: center;
+    }
+    .bg-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 2px solid #3d3d5a;
+      cursor: pointer;
+    }
+    .bg-swatch.active {
+      border-color: #a78bfa;
+      box-shadow: 0 0 12px #7c3aed;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#1877f2" stroke-width="1.5"/>
-        <path d="M15 8.5H14.5C13.6716 8.5 13 9.17157 13 10V10.5M13 10.5H15M13 10.5V15M10 12H11.5M10 15H12" stroke="#1877f2" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M12 22C17.5228 22 22 17.5228 22 12" stroke="#4d9aff" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      FB Video Downloader
-    </h1>
-    <div class="subhead">Paste any Facebook video link — grab it in all resolutions</div>
-
-    <div class="input-group">
-      <div class="url-input-wrapper">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-        </svg>
-        <input type="url" id="fbUrl" placeholder="https://www.facebook.com/watch/?v=...  or  fb.watch/..." autocomplete="off" spellcheck="false">
-      </div>
-      <button class="btn-primary" id="fetchBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" />
-          <path d="M12 8V16M8 12H16" />
-        </svg>
-        Get video links
-      </button>
+  <!-- header -->
+  <header class="app-header">
+    <div class="logo-area">
+      <i class="fas fa-magic logo-icon"></i>
+      <span class="logo-text">PixelForge</span>
     </div>
-
-    <!-- Error area -->
-    <div id="errorBox" style="display: none;" class="error-message">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="12" />
-        <line x1="12" y1="16" x2="12.01" y2="16" />
-      </svg>
-      <span id="errorMsg">Something went wrong.</span>
+    <div class="header-actions">
+      <button class="btn" id="uploadBtn"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+      <button class="btn btn-primary" id="downloadBtn"><i class="fas fa-download"></i> Download</button>
     </div>
+  </header>
 
-    <!-- Resolution list -->
-    <div class="resolution-section" id="resolutionSection">
-      <div class="resolution-header">
-        <h2>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8bb9e7" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="2.18" />
-            <line x1="8" y1="2" x2="8" y2="22" />
-            <line x1="16" y1="2" x2="16" y2="22" />
-            <line x1="2" y1="8" x2="22" y2="8" />
-            <line x1="2" y1="16" x2="22" y2="16" />
-          </svg>
-          Available resolutions
-        </h2>
-        <span class="badge" id="resCount">0 formats</span>
-      </div>
+  <!-- hidden file input -->
+  <input type="file" id="fileInput" accept="image/*">
 
-      <div class="resolution-list" id="resolutionList">
-        <div class="empty-state" id="emptyState">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 8v8M8 12h8" />
-          </svg>
-          <span>Paste a link and click “Get video links”</span>
+  <!-- main editor -->
+  <div class="editor-container">
+    <!-- left sidebar -->
+    <aside class="toolbar">
+      <!-- Filters -->
+      <div>
+        <div class="section-title"><i class="fas fa-sliders-h"></i> Filters & effects</div>
+        <div class="filter-grid" id="filterGrid">
+          <div class="filter-card" data-filter="none"><i class="fas fa-ban"></i> None</div>
+          <div class="filter-card" data-filter="grayscale"><i class="fas fa-adjust"></i> B&W</div>
+          <div class="filter-card" data-filter="sepia"><i class="fas fa-coffee"></i> Sepia</div>
+          <div class="filter-card" data-filter="invert"><i class="fas fa-exchange-alt"></i> Invert</div>
+          <div class="filter-card" data-filter="blur"><i class="fas fa-water"></i> Blur</div>
+          <div class="filter-card" data-filter="brightness"><i class="fas fa-sun"></i> Bright</div>
+          <div class="filter-card" data-filter="contrast"><i class="fas fa-adjust"></i> Contrast</div>
+          <div class="filter-card" data-filter="saturate"><i class="fas fa-tint"></i> Vivid</div>
         </div>
       </div>
-    </div>
 
-    <div class="note">
-      ⚡ Works with public FB videos. This is a demo — real extraction uses a backend service.<br>
-      Replace the mock backend call with your own API (e.g., yt-dlp, RapidAPI).
-    </div>
+      <!-- Blur + color intensity sliders -->
+      <div class="slider-group">
+        <div class="section-title"><i class="fas fa-magic"></i> Adjust</div>
+        <div class="slider-item">
+          <div class="slider-label"><span>Blur</span> <span id="blurValue">0px</span></div>
+          <input type="range" id="blurSlider" min="0" max="20" value="0" step="0.5">
+        </div>
+        <div class="slider-item">
+          <div class="slider-label"><span>Brightness</span> <span id="brightnessValue">100%</span></div>
+          <input type="range" id="brightnessSlider" min="0" max="200" value="100" step="1">
+        </div>
+        <div class="slider-item">
+          <div class="slider-label"><span>Contrast</span> <span id="contrastValue">100%</span></div>
+          <input type="range" id="contrastSlider" min="0" max="200" value="100" step="1">
+        </div>
+        <div class="slider-item">
+          <div class="slider-label"><span>Saturation</span> <span id="saturateValue">100%</span></div>
+          <input type="range" id="saturateSlider" min="0" max="200" value="100" step="1">
+        </div>
+      </div>
+
+      <!-- Color tint (lightroom style) -->
+      <div>
+        <div class="section-title"><i class="fas fa-palette"></i> Color tint</div>
+        <div class="color-row">
+          <span><i class="fas fa-fill-drip"></i> Tint color</span>
+          <input type="color" id="tintColor" value="#a78bfa">
+        </div>
+        <div class="slider-item">
+          <div class="slider-label"><span>Tint intensity</span> <span id="tintValue">0%</span></div>
+          <input type="range" id="tintSlider" min="0" max="100" value="0" step="1">
+        </div>
+      </div>
+
+      <!-- Background & remove bg tools -->
+      <div>
+        <div class="section-title"><i class="fas fa-image"></i> Background</div>
+        <div class="background-actions" style="flex-direction: column; gap: 8px;">
+          <button class="bg-btn" id="removeBgBtn"><i class="fas fa-cut"></i> Remove background (white)</button>
+          <button class="bg-btn" id="setTransparentBtn"><i class="fas fa-chess-board"></i> Transparent background</button>
+          <div class="bg-option">
+            <div class="bg-swatch" style="background: #ffffff;" data-bg="#ffffff"></div>
+            <div class="bg-swatch" style="background: #000000;" data-bg="#000000"></div>
+            <div class="bg-swatch" style="background: #ffd966;" data-bg="#ffd966"></div>
+            <div class="bg-swatch" style="background: #b4e6b2;" data-bg="#b4e6b2"></div>
+            <div class="bg-swatch" style="background: #a7d0f0;" data-bg="#a7d0f0"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- canvas / main preview -->
+    <main class="canvas-area">
+      <div class="canvas-card" id="canvasCard">
+        <canvas id="imageCanvas" width="800" height="600"></canvas>
+        <div class="canvas-placeholder" id="canvasPlaceholder">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Upload an image to start editing</p>
+          <button class="btn btn-primary" id="uploadPlaceholderBtn"><i class="fas fa-folder-open"></i> Choose image</button>
+        </div>
+      </div>
+      <div class="footer-note">
+        <span class="github-corner"><i class="fab fa-github"></i> <a href="#">PixelForge</a> · Canva & Lightroom inspired</span>
+      </div>
+    </main>
   </div>
+
+  <!-- toast message -->
+  <div class="toast" id="toast"><i class="fas fa-check-circle" style="color: #a78bfa;"></i> <span id="toastMsg">Done</span></div>
 
   <script>
     (function() {
-      // UI elements
-      const fbUrlInput = document.getElementById('fbUrl');
-      const fetchBtn = document.getElementById('fetchBtn');
-      const resolutionList = document.getElementById('resolutionList');
-      const resCountSpan = document.getElementById('resCount');
-      const errorBox = document.getElementById('errorBox');
-      const errorMsg = document.getElementById('errorMsg');
-      const emptyState = document.getElementById('emptyState');
+      // ----- DOM elements -----
+      const canvas = document.getElementById('imageCanvas');
+      const ctx = canvas.getContext('2d');
+      const placeholder = document.getElementById('canvasPlaceholder');
+      const fileInput = document.getElementById('fileInput');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const uploadPlaceholderBtn = document.getElementById('uploadPlaceholderBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const filterCards = document.querySelectorAll('.filter-card');
 
-      // Helper: hide error
-      function hideError() {
-        errorBox.style.display = 'none';
-        errorMsg.textContent = '';
+      // sliders
+      const blurSlider = document.getElementById('blurSlider');
+      const blurValue = document.getElementById('blurValue');
+      const brightnessSlider = document.getElementById('brightnessSlider');
+      const brightnessValue = document.getElementById('brightnessValue');
+      const contrastSlider = document.getElementById('contrastSlider');
+      const contrastValue = document.getElementById('contrastValue');
+      const saturateSlider = document.getElementById('saturateSlider');
+      const saturateValue = document.getElementById('saturateValue');
+      const tintColor = document.getElementById('tintColor');
+      const tintSlider = document.getElementById('tintSlider');
+      const tintValue = document.getElementById('tintValue');
+
+      // background / remove bg
+      const removeBgBtn = document.getElementById('removeBgBtn');
+      const setTransparentBtn = document.getElementById('setTransparentBtn');
+      const bgSwatches = document.querySelectorAll('.bg-swatch');
+
+      // toast
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+
+      // ----- state -----
+      let currentImage = null;          // original Image object
+      let originalImageData = null;     // ImageData of original (for background removal)
+      let currentFilter = 'none';
+      let bgColor = null;              // null = transparent, or hex string
+
+      // helper: show toast
+      function showToast(msg, isError = false) {
+        toastMsg.textContent = msg;
+        toast.querySelector('i').className = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+        toast.style.borderLeftColor = isError ? '#f87171' : '#a78bfa';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2400);
       }
 
-      // Helper: show error
-      function showError(message) {
-        errorMsg.textContent = message;
-        errorBox.style.display = 'flex';
+      // ----- apply all filters & adjustments to canvas -----
+      function applyEffects() {
+        if (!currentImage) {
+          // clear canvas and show placeholder
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          placeholder.style.display = 'flex';
+          canvas.style.display = 'none';
+          return;
+        }
+
+        placeholder.style.display = 'none';
+        canvas.style.display = 'block';
+
+        // Match canvas dimensions to image (but keep reasonable max)
+        const maxW = 900;
+        const maxH = 600;
+        let w = currentImage.width;
+        let h = currentImage.height;
+        if (w > maxW || h > maxH) {
+          const ratio = Math.min(maxW / w, maxH / h);
+          w = w * ratio;
+          h = h * ratio;
+        }
+        canvas.width = w;
+        canvas.height = h;
+
+        // 1. draw image on canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // if we have a background color (not transparent), fill canvas first
+        if (bgColor && bgColor !== 'transparent') {
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (bgColor === null) {
+          // transparent background: leave clear
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // draw the image (with cover / contain?)
+        // we'll use contain to avoid cropping
+        const scale = Math.min(canvas.width / currentImage.width, canvas.height / currentImage.height);
+        const drawW = currentImage.width * scale;
+        const drawH = currentImage.height * scale;
+        const offsetX = (canvas.width - drawW) / 2;
+        const offsetY = (canvas.height - drawH) / 2;
+        ctx.drawImage(currentImage, offsetX, offsetY, drawW, drawH);
+
+        // 2. if background removal was used, we need to apply that mask before effects
+        // we'll handle removal in a separate function that modifies currentImage (via offscreen canvas)
+        // but for background removal we already replaced currentImage with processed version?
+        // Actually remove background function will create a new image with white background removed.
+        // We'll store that and re-draw.
+
+        // 3. Build filter string (CSS filters on canvas)
+        let filterString = '';
+        const brightnessVal = brightnessSlider.value / 100; // 1 = 100%
+        const contrastVal = contrastSlider.value / 100;
+        const saturateVal = saturateSlider.value / 100;
+
+        // base filter from card
+        switch (currentFilter) {
+          case 'grayscale': filterString += `grayscale(1) `; break;
+          case 'sepia': filterString += `sepia(1) `; break;
+          case 'invert': filterString += `invert(1) `; break;
+          case 'blur': filterString += `blur(${blurSlider.value}px) `; break;
+          case 'brightness': filterString += `brightness(${brightnessVal}) `; break;
+          case 'contrast': filterString += `contrast(${contrastVal}) `; break;
+          case 'saturate': filterString += `saturate(${saturateVal}) `; break;
+          default: break;
+        }
+
+        // always add blur (even if filter card not blur)
+        if (currentFilter !== 'blur' && parseFloat(blurSlider.value) > 0) {
+          filterString += `blur(${blurSlider.value}px) `;
+        }
+
+        // brightness, contrast, saturation (always applied unless already from card)
+        if (currentFilter !== 'brightness') {
+          filterString += `brightness(${brightnessVal}) `;
+        }
+        if (currentFilter !== 'contrast') {
+          filterString += `contrast(${contrastVal}) `;
+        }
+        if (currentFilter !== 'saturate') {
+          filterString += `saturate(${saturateVal}) `;
+        }
+
+        // Apply CSS filter string to canvas
+        ctx.filter = filterString.trim() || 'none';
+
+        // redraw with filter
+        // clear again and redraw with background and filter
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (bgColor && bgColor !== 'transparent') {
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        ctx.filter = filterString.trim() || 'none';
+        ctx.drawImage(currentImage, offsetX, offsetY, drawW, drawH);
+
+        // 4. tint overlay (using multiply or screen? we'll use globalCompositeOperation)
+        const tintIntensity = tintSlider.value / 100;
+        if (tintIntensity > 0) {
+          ctx.filter = 'none'; // reset filter for tint layer
+          ctx.globalCompositeOperation = 'multiply';
+          ctx.fillStyle = tintColor.value;
+          ctx.globalAlpha = tintIntensity * 0.7; // max 0.7 for subtle effect
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          // reset
+          ctx.globalAlpha = 1.0;
+          ctx.globalCompositeOperation = 'source-over';
+        }
+
+        // reset filter
+        ctx.filter = 'none';
+
+        // update slider labels
+        blurValue.textContent = blurSlider.value + 'px';
+        brightnessValue.textContent = brightnessSlider.value + '%';
+        contrastValue.textContent = contrastSlider.value + '%';
+        saturateValue.textContent = saturateSlider.value + '%';
+        tintValue.textContent = tintSlider.value + '%';
       }
 
-      // Helper: update resolution count badge
-      function updateCount(count) {
-        resCountSpan.textContent = `${count} format${count !== 1 ? 's' : ''}`;
+      // ----- load image into currentImage & reset adjustments -----
+      function loadImage(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            currentImage = img;
+            // store original image data for background removal (we'll use a separate canvas)
+            // reset background to none (transparent)
+            bgColor = null;
+            updateBgSwatchActive();
+            // reset sliders & filters
+            resetControls();
+            applyEffects();
+            showToast('Image loaded ✨');
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
 
-      // Helper: clear list and show empty state
-      function resetList() {
-        resolutionList.innerHTML = '';
-        resolutionList.appendChild(emptyState);
-        emptyState.style.display = 'flex';
-        updateCount(0);
+      // reset all controls
+      function resetControls() {
+        // filters
+        filterCards.forEach(c => c.classList.remove('active'));
+        document.querySelector('.filter-card[data-filter="none"]').classList.add('active');
+        currentFilter = 'none';
+
+        blurSlider.value = 0;
+        brightnessSlider.value = 100;
+        contrastSlider.value = 100;
+        saturateSlider.value = 100;
+        tintSlider.value = 0;
+        tintColor.value = '#a78bfa';
+        bgColor = null;
+        updateBgSwatchActive();
+
+        // update labels
+        blurValue.textContent = '0px';
+        brightnessValue.textContent = '100%';
+        contrastValue.textContent = '100%';
+        saturateValue.textContent = '100%';
+        tintValue.textContent = '0%';
       }
 
-      // Helper: create a resolution item element
-      function createResolutionItem(res) {
-        const item = document.createElement('div');
-        item.className = 'resolution-item';
-
-        // left side: info
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'res-info';
-
-        const labelSpan = document.createElement('span');
-        labelSpan.className = 'res-label';
-        labelSpan.textContent = res.quality || 'unknown';
-
-        const metaDiv = document.createElement('div');
-        metaDiv.className = 'res-meta';
-
-        // format container / codec
-        const formatSpan = document.createElement('span');
-        formatSpan.textContent = res.format || 'mp4';
-
-        // size or bitrate (optional)
-        const sizeSpan = document.createElement('span');
-        sizeSpan.textContent = res.size || '— MB';
-
-        // optional audio indicator
-        const audioSpan = document.createElement('span');
-        audioSpan.textContent = res.audio ? '🔊 audio' : '🔇 no audio';
-
-        metaDiv.appendChild(formatSpan);
-        metaDiv.appendChild(sizeSpan);
-        metaDiv.appendChild(audioSpan);
-
-        infoDiv.appendChild(labelSpan);
-        infoDiv.appendChild(metaDiv);
-
-        // download button
-        const dlBtn = document.createElement('button');
-        dlBtn.className = 'download-btn';
-        dlBtn.innerHTML = `
-          <svg viewBox="0 0 24 24">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          Download
-        `;
-        dlBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (res.downloadUrl) {
-            // In a real app, this would start the download or open the URL
-            window.open(res.downloadUrl, '_blank', 'noopener,noreferrer');
+      // background swatch active state
+      function updateBgSwatchActive() {
+        bgSwatches.forEach(sw => {
+          if (sw.dataset.bg === bgColor) {
+            sw.classList.add('active');
           } else {
-            alert('Demo: download link would be generated by backend.\nQuality: ' + (res.quality || 'unknown'));
+            sw.classList.remove('active');
           }
         });
-
-        item.appendChild(infoDiv);
-        item.appendChild(dlBtn);
-
-        return item;
       }
 
-      // Render a list of resolution objects
-      function renderResolutions(resolutions) {
-        // Clear current content (but keep emptyState reference)
-        resolutionList.innerHTML = '';
-
-        if (!resolutions || resolutions.length === 0) {
-          resolutionList.appendChild(emptyState);
-          emptyState.style.display = 'flex';
-          updateCount(0);
+      // ----- Remove background (simple white removal with tolerance) -----
+      function removeWhiteBackground() {
+        if (!currentImage) {
+          showToast('No image loaded', true);
           return;
         }
 
-        emptyState.style.display = 'none'; // hide empty state
+        // create offscreen canvas at original image size
+        const offCanvas = document.createElement('canvas');
+        const offCtx = offCanvas.getContext('2d');
+        offCanvas.width = currentImage.width;
+        offCanvas.height = currentImage.height;
+        offCtx.drawImage(currentImage, 0, 0);
 
-        resolutions.forEach((res, index) => {
-          // Add a small delay for animation (optional)
-          const item = createResolutionItem(res);
-          // stagger animation
-          item.style.animationDelay = `${index * 0.03}s`;
-          resolutionList.appendChild(item);
-        });
+        const imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+        const data = imageData.data;
 
-        updateCount(resolutions.length);
-      }
-
-      // ---------- MOCK BACKEND (replace with real API) ----------
-      // This simulates fetching video resolutions for a given FB link.
-      // In a production app, you would call your server endpoint that uses yt-dlp or similar.
-      function mockFetchResolutions(url) {
-        return new Promise((resolve, reject) => {
-          // Very basic URL check
-          if (!url || (!url.includes('facebook.com') && !url.includes('fb.watch') && !url.includes('fb.com'))) {
-            reject(new Error('Please enter a valid Facebook video link.'));
-            return;
+        // tolerance for white removal
+        const tolerance = 120; // fairly aggressive
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          // if pixel is near white, make transparent
+          if (r > 255 - tolerance && g > 255 - tolerance && b > 255 - tolerance) {
+            data[i + 3] = 0; // alpha = 0
           }
+        }
 
-          // Simulate network delay
-          setTimeout(() => {
-            // Generate plausible resolutions based on typical FB video outputs.
-            // You can customize this list.
-            const mockData = [
-              {
-                quality: '1080p (Full HD)',
-                format: 'mp4',
-                size: '~ 45 MB',
-                audio: true,
-                downloadUrl: 'https://example.com/video/1080p.mp4' // dummy
-              },
-              {
-                quality: '720p (HD)',
-                format: 'mp4',
-                size: '~ 28 MB',
-                audio: true,
-                downloadUrl: 'https://example.com/video/720p.mp4'
-              },
-              {
-                quality: '480p',
-                format: 'mp4',
-                size: '~ 14 MB',
-                audio: true,
-                downloadUrl: 'https://example.com/video/480p.mp4'
-              },
-              {
-                quality: '360p',
-                format: 'mp4',
-                size: '~ 8 MB',
-                audio: true,
-                downloadUrl: 'https://example.com/video/360p.mp4'
-              },
-              {
-                quality: '240p (low)',
-                format: 'mp4',
-                size: '~ 4 MB',
-                audio: false,
-                downloadUrl: 'https://example.com/video/240p.mp4'
-              },
-              {
-                quality: 'Audio only (m4a)',
-                format: 'm4a',
-                size: '~ 3 MB',
-                audio: true,
-                downloadUrl: 'https://example.com/audio.m4a'
-              }
-            ];
-            resolve(mockData);
-          }, 950); // simulate delay
-        });
+        offCtx.putImageData(imageData, 0, 0);
+
+        // create new image from offscreen canvas
+        const newImg = new Image();
+        newImg.onload = () => {
+          currentImage = newImg;
+          // set background to transparent to show removal
+          bgColor = null;
+          updateBgSwatchActive();
+          applyEffects();
+          showToast('White background removed');
+        };
+        newImg.src = offCanvas.toDataURL();
       }
 
-      // ---------- Event handler ----------
-      async function handleFetch() {
-        hideError();
-        const url = fbUrlInput.value.trim();
+      // set transparent background (just clear bgColor)
+      function setTransparent() {
+        if (!currentImage) return;
+        bgColor = null;
+        updateBgSwatchActive();
+        applyEffects();
+        showToast('Transparent background');
+      }
 
-        if (!url) {
-          showError('Please paste a Facebook video link first.');
-          resetList();
+      // set background color
+      function setBackgroundColor(hex) {
+        if (!currentImage) return;
+        bgColor = hex;
+        updateBgSwatchActive();
+        applyEffects();
+        showToast(`Background set to ${hex}`);
+      }
+
+      // download current canvas
+      function downloadImage() {
+        if (!currentImage) {
+          showToast('No image to download', true);
           return;
         }
-
-        // UI loading state
-        fetchBtn.disabled = true;
-        fetchBtn.innerHTML = `<span class="spinner"></span> Extracting...`;
-
-        try {
-          // Use mock (replace with real fetch to your backend)
-          // Example: const response = await fetch('/api/extract?url=' + encodeURIComponent(url));
-          // const data = await response.json();
-          const resolutions = await mockFetchResolutions(url);
-
-          renderResolutions(resolutions);
-        } catch (err) {
-          showError(err.message || 'Failed to fetch video. Please check the link.');
-          resetList();
-        } finally {
-          fetchBtn.disabled = false;
-          fetchBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" />
-              <path d="M12 8V16M8 12H16" />
-            </svg>
-            Get video links
-          `;
-        }
+        const link = document.createElement('a');
+        link.download = `pixelforge-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Download started');
       }
 
-      // Attach event listeners
-      fetchBtn.addEventListener('click', handleFetch);
-      fbUrlInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          handleFetch();
+      // ----- event listeners -----
+
+      // upload
+      uploadBtn.addEventListener('click', () => fileInput.click());
+      uploadPlaceholderBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          loadImage(e.target.files[0]);
+          fileInput.value = ''; // reset
         }
       });
 
-      // Initialize with empty list
-      resetList();
+      // drag & drop on canvas card
+      const canvasCard = document.getElementById('canvasCard');
+      canvasCard.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        canvasCard.style.borderColor = '#a78bfa';
+      });
+      canvasCard.addEventListener('dragleave', () => {
+        canvasCard.style.borderColor = '#2e2e46';
+      });
+      canvasCard.addEventListener('drop', (e) => {
+        e.preventDefault();
+        canvasCard.style.borderColor = '#2e2e46';
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+          loadImage(file);
+        } else {
+          showToast('Please drop an image file', true);
+        }
+      });
 
-      // (Optional) prefill a demo value for convenience? Not needed.
-      // but you can uncomment for quick testing
-      // fbUrlInput.value = 'https://www.facebook.com/watch/?v=1234567890';
+      // filter cards
+      filterCards.forEach(card => {
+        card.addEventListener('click', () => {
+          filterCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          currentFilter = card.dataset.filter;
+          // if blur filter selected, reset blur slider? we keep as is but we can set to 3 for effect
+          if (currentFilter === 'blur' && blurSlider.value == 0) {
+            blurSlider.value = 4;
+          }
+          applyEffects();
+        });
+      });
+
+      // sliders
+      blurSlider.addEventListener('input', applyEffects);
+      brightnessSlider.addEventListener('input', applyEffects);
+      contrastSlider.addEventListener('input', applyEffects);
+      saturateSlider.addEventListener('input', applyEffects);
+      tintSlider.addEventListener('input', applyEffects);
+      tintColor.addEventListener('input', applyEffects);
+
+      // background / remove bg
+      removeBgBtn.addEventListener('click', removeWhiteBackground);
+      setTransparentBtn.addEventListener('click', setTransparent);
+
+      bgSwatches.forEach(sw => {
+        sw.addEventListener('click', () => {
+          const color = sw.dataset.bg;
+          if (color) setBackgroundColor(color);
+        });
+      });
+
+      // download
+      downloadBtn.addEventListener('click', downloadImage);
+
+      // initialize with no image
+      applyEffects();
+
+      // also add a small "reset" via filter none (already)
     })();
   </script>
 </body>
-          </html>
+  </html>
